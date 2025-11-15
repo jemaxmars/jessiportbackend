@@ -7,7 +7,7 @@ dotenv.config();
 
 const app = express();
 
-// Middleware
+// middleware
 app.use(helmet());
 app.use(
   cors({
@@ -18,7 +18,7 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Routes
+// routes
 app.get("/api/health", (req, res) => {
   res.json({
     status: "OK",
@@ -35,7 +35,7 @@ app.use((req, res) => {
   });
 });
 
-// Error handler
+// error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({
