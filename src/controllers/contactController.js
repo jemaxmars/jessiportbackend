@@ -1,10 +1,12 @@
 import Contact from "../models/Contact.js";
+import { sendContactEmail } from "../utils/emailService.js";
+import logger from "../utils/logger.js";
 
 export const submitContact = async (req, res) => {
   try {
     const { name, email, message } = req.body;
 
-    // Create contact record
+    // create contact record
     const contact = await Contact.create({
       name,
       email,
@@ -13,13 +15,26 @@ export const submitContact = async (req, res) => {
       userAgent: req.get("user-agent"),
     });
 
+    // send email notification asynchronously
+    sendContactEmail({ name, email, message })
+      .then((result) => {
+        if (result.success) {
+          logger.info(`Email notification sent for contact ${contact._id}`);
+        } else {
+          logger.error(`Failed to send email for contact ${contact._id}`);
+        }
+      })
+      .catch((err) => {
+        logger.error("Email service error", err);
+      });
+
     res.status(201).json({
       success: true,
-      message: "Message received successfully",
+      message: "Message received successfully. I will get back to you soon!",
       contactId: contact._id,
     });
   } catch (error) {
-    console.error("Contact submission error:", error);
+    logger.error("Contact submission error", error);
     res.status(500).json({
       success: false,
       message: "Error submitting contact form",
@@ -31,14 +46,13 @@ export const submitContact = async (req, res) => {
 export const getAllContacts = async (req, res) => {
   try {
     const contacts = await Contact.find().sort({ createdAt: -1 });
-
     res.status(200).json({
       success: true,
       count: contacts.length,
       data: contacts,
     });
   } catch (error) {
-    console.error("Get contacts error:", error);
+    logger.error("Get contacts error", error);
     res.status(500).json({
       success: false,
       message: "Error fetching contacts",
@@ -64,7 +78,7 @@ export const getContactById = async (req, res) => {
       data: contact,
     });
   } catch (error) {
-    console.error("Get contact error:", error);
+    logger.error("Get contact error", error);
     res.status(500).json({
       success: false,
       message: "Error fetching contact",
@@ -98,13 +112,15 @@ export const updateContactStatus = async (req, res) => {
       });
     }
 
+    logger.info(`Contact ${id} status updated to ${status}`);
+
     res.status(200).json({
       success: true,
       message: "Contact status updated",
       data: contact,
     });
   } catch (error) {
-    console.error("Update contact error:", error);
+    logger.error("Update contact error", error);
     res.status(500).json({
       success: false,
       message: "Error updating contact",
@@ -125,13 +141,15 @@ export const deleteContact = async (req, res) => {
       });
     }
 
+    logger.info(`Contact ${id} deleted`);
+
     res.status(200).json({
       success: true,
       message: "Contact deleted successfully",
       data: contact,
     });
   } catch (error) {
-    console.error("Delete contact error:", error);
+    logger.error("Delete contact error", error);
     res.status(500).json({
       success: false,
       message: "Error deleting contact",
