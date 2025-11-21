@@ -40,9 +40,4 @@ const notFoundHandler = (req, res) => {
   });
 };
 
-module.exports = {
-  errorHandler,
-  notFoundHandler,
-};
-
 export { errorHandler, notFoundHandler };
