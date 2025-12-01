@@ -1,0 +1,29 @@
+[33mcommit 2f22252c8703903471e584fb792cccf68c113369[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mstage-2-backend-setup[m[33m, [m[1;31morigin/stage-2-backend-setup[m[33m)[m
+Author: jemaxmars <jemaxmars@icloud.com>
+Date:   Wed Nov 12 16:09:42 2025 -0500
+
+    docs: Update README with correct deployment configuration
+    
+    Deployment Updates:
+    - Update frontend repo link to jessiportfrontend
+    - Configure both frontend and backend on single Google VM
+    - Update DNS configuration instructions
+    - Add single VM Nginx configuration
+    - Update monitoring and maintenance procedures
+    
+    Frontend Integration:
+    - Add frontend build and deployment steps
+    - Include static file serving via Nginx
+    - Add frontend update procedures
+    
+    DNS Configuration:
+    - Document A record setup for main domain
+    - Include subdomain setup for API
+    - Correct DNS routing for both services
+    
+    Maintenance:
+    - Add frontend update commands
+    - Include Nginx restart procedures
+    - Document both services update process
+
+README.md
