@@ -449,7 +449,3 @@ gcloud compute ssh portfolio-vm --zone=us-central1-a
 - **GitHub Backend:** [github.com/jemaxmars/jessiportbackend](https://github.com/jemaxmars/jessiportbackend)
 - **LinkedIn:** [linkedin.com/in/jemaxmars](https://linkedin.com/in/jemaxmars)
 
----
-
-**Stage 2 - Backend Setup with Google VM Deployment** 🚀
->>>>>>> stage-2-backend-setup
